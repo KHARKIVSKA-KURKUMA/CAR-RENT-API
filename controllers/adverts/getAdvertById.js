@@ -1,5 +1,5 @@
-const { Advert } = require(`../models/adverts`);
-const { errorMessage } = require(`../helpers`);
+const { Advert } = require(`../../models/adverts`);
+const { errorMessage } = require(`../../helpers`);
 
 const getAdvertById = async (req, res) => {
   const { advertId } = req.params;

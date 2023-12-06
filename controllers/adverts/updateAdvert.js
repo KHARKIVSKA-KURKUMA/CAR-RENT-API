@@ -1,5 +1,5 @@
-const { Advert, schemas } = require(`../models/adverts`);
-const { errorMessage } = require(`../helpers`);
+const { Advert, schemas } = require(`../../models/adverts`);
+const { errorMessage } = require(`../../helpers`);
 
 const updateAdvert = async (req, res) => {
   const { error } = schemas.advertAdd.validate(req.body);

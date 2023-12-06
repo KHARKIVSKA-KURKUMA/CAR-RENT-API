@@ -1,4 +1,4 @@
-const { Advert } = require(`../models/adverts`);
+const { Advert } = require(`../../models/adverts`);
 
 const getContactsList = async (_, res) => {
   const result = await Advert.find({});
