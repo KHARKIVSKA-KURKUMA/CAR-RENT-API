@@ -1,18 +1,30 @@
 const express = require("express");
 const controllers = require(`../../controllers/adverts`);
 const { controllersWrap } = require(`../../helpers`);
-const isValidId = require("../../middleware/isValidId");
+const { auth, isValidId } = require("../../middleware");
 
 const router = express.Router();
 
-router.get("/", controllersWrap(controllers.getAdvertsList));
-router.get("/:advertId", isValidId, controllersWrap(controllers.getAdvertById));
-router.post("/", controllersWrap(controllers.addAdvert));
+router.get("/rental", controllersWrap(controllers.getAdvertsList));
+router.get("/", auth, controllersWrap(controllers.getUserAdverts));
+router.get(
+  "/:advertId",
+  isValidId,
+  auth,
+  controllersWrap(controllers.getAdvertById)
+);
+router.post("/", auth, controllersWrap(controllers.addAdvert));
 router.delete(
   "/:advertId",
   isValidId,
+  auth,
   controllersWrap(controllers.deleteAdvert)
 );
-router.put("/:advertId", isValidId, controllersWrap(controllers.updateAdvert));
+router.put(
+  "/:advertId",
+  isValidId,
+  auth,
+  controllersWrap(controllers.updateAdvert)
+);
 
 module.exports = router;

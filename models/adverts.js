@@ -43,7 +43,6 @@ const advertSchema = new Schema(
       type: Array,
       required: true,
     },
-
     rentalPrice: {
       type: String,
       required: true,
@@ -63,6 +62,10 @@ const advertSchema = new Schema(
     mileage: {
       type: Number,
       required: true,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
     },
   },
   { versionKey: false, timestamps: true }

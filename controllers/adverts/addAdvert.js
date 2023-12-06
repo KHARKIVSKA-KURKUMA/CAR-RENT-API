@@ -17,7 +17,8 @@ const addAdvert = async (req, res) => {
       });
     }
   } else {
-    const result = await Advert.create(req.body);
+    const { id: owner } = req.user;
+    const result = await Advert.create({ ...req.body, owner });
     res.status(201).json(result);
   }
 };
