@@ -5,7 +5,7 @@ const { auth, isValidId } = require("../../middleware");
 
 const router = express.Router();
 
-router.get("/rental", controllersWrap(controllers.getAdvertsList));
+router.get("/catalog", controllersWrap(controllers.getAdvertsList));
 router.get("/", auth, controllersWrap(controllers.getUserAdverts));
 router.get(
   "/:advertId",
