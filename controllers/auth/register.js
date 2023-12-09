@@ -1,7 +1,9 @@
 const bcrypt = require("bcryptjs");
 const { basedir } = global;
+const jwt = require("jsonwebtoken");
 const { User, schemas } = require(`${basedir}/models/user`);
 const { errorMessage } = require(`${basedir}/helpers`);
+const { SECRET_KEY } = process.env;
 
 const register = async (req, res) => {
   const { error } = schemas.register.validate(req.body);
@@ -25,10 +27,26 @@ const register = async (req, res) => {
     throw errorMessage({ status: 409, message: `Email ${email} in use` });
   }
   const hashPassword = await bcrypt.hash(password, 10);
-  const result = await User.create({ ...req.body, password: hashPassword });
-  res.status(201).json({
-    user: { name: result.name, email: result.email },
-  });
+  try {
+    const result = await User.create({ ...req.body, password: hashPassword });
+
+    const payload = {
+      id: result._id,
+    };
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
+
+    if (result) {
+      await User.findByIdAndUpdate(result._id, { token });
+      res.status(201).json({
+        token,
+        user: { name: result.name, email: result.email },
+      });
+    } else {
+      console.error("Failed to create user");
+    }
+  } catch (error) {
+    console.error("Failed to create user:", error);
+  }
 };
 
 module.exports = register;
