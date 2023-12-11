@@ -1,11 +1,19 @@
 const Joi = require("joi");
 const { Schema, model } = require("mongoose");
 
+const addressRegExp = /^[\w\s]+,\s[\w\s]+,\s[\w\s]+$/;
+
 const advertSchema = new Schema(
   {
     year: {
       type: Number,
       required: [true, "Set year for car"],
+      validate: {
+        validator: function (value) {
+          return value <= new Date().getFullYear();
+        },
+        message: "Year cannot be greater than the current year",
+      },
     },
     make: {
       type: String,
@@ -53,6 +61,7 @@ const advertSchema = new Schema(
     },
     address: {
       type: String,
+      match: addressRegExp,
       required: true,
     },
     rentalConditions: {
