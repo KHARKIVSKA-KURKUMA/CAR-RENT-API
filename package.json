@@ -1,5 +1,5 @@
 {
-  "name": "rest-api",
+  "name": "CarRentAPI",
   "version": "0.0.0",
   "private": true,
   "scripts": {

@@ -25,13 +25,13 @@ Make sure you have the following installed on your system:
 1. Clone the repository:
 
    ```bash
-   https://github.com/KHARKIVSKA-KURKUMA/REST-API.git
+   https://github.com/KHARKIVSKA-KURKUMA/CAR-RENT-API.git
    ```
 
 2. Navigate to the project directory:
 
 ```bash
-cd REST-API
+cd CAR-RENT-API
 ```
 
 3. Install dependencies:
