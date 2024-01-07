@@ -1,0 +1,783 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "Car Rent Swagger API",
+    "description": " API for managing car inventory and user authentication "
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [
+    {
+      "url": "https://rent-car-r832.onrender.com"
+    },
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authorization",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "Adverts",
+      "description": "Adverts endpoints"
+    }
+  ],
+  "basePath": "/",
+  "schemes": ["http"],
+  "paths": {
+    "/users/register": {
+      "post": {
+        "tags": ["Authorization"],
+        "summary": "User registration",
+        "description": "Registration's object",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "User's name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "User's email",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "User's password",
+                    "format": "password",
+                    "minLength": 6
+                  }
+                },
+                "required": ["name", "email", "password"],
+                "example": {
+                  "name": "Username",
+                  "email": "example@gmail.com",
+                  "password": "123456"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "token": "token",
+                    "user": {
+                      "name": "Username",
+                      "email": "example@gmail.com"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["Authorization"],
+        "summary": "User login",
+        "description": "Login's object",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "User's email",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "User's password",
+                    "format": "password",
+                    "minLength": 6
+                  }
+                },
+                "required": ["email", "password"],
+                "example": {
+                  "name": "Username",
+                  "email": "example@gmail.com",
+                  "password": "123456"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "token": "token",
+                    "user": {
+                      "name": "Username",
+                      "email": "example@gmail.com"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/current": {
+      "get": {
+        "tags": ["Authorization"],
+        "summary": "Get current user info",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "_id": "someUserID",
+                    "name": "Username",
+                    "email": "example@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "tags": ["Authorization"],
+        "summary": "User logout",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "User logout successful"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/adverts/catalog": {
+      "get": {
+        "tags": ["Adverts"],
+        "summary": "To receive all adverts in the database",
+        "responses": {
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "example": [
+                    {
+                      "_id": "1",
+                      "year": 2010,
+                      "make": "Mitsubishi",
+                      "model": "Outlander",
+                      "type": "SUV",
+                      "img": "https://media.ed.edmunds-media.com/mitsubishi/outlander-phev/2023/oem/2023_mitsubishi_outlander-phev_4dr-suv_40th-anniversary_fq_oem_1_815.jpg",
+                      "description": "The Mitsubishi Outlander is a practical and fuel-efficient SUV with a stylish design and a range of modern features.",
+                      "fuelConsumption": "7.9",
+                      "engineSize": "2.4L 4-cylinder",
+                      "accessories": [
+                        "Heated front seats",
+                        "Rockford Fosgate premium audio system",
+                        "Power liftgate"
+                      ],
+                      "functionalities": [
+                        "Super All-Wheel Control",
+                        "Multi-View camera system",
+                        "Bluetooth hands-free system"
+                      ],
+                      "rentalPrice": "$30",
+                      "rentalCompany": "City Car Rentals",
+                      "address": "654 Example Avenue, Lviv, Ukraine",
+                      "rentalConditions": "Minimum age: 21\nValid driver's license\nProof of insurance required",
+                      "mileage": 5374
+                    },
+                    {
+                      "_id": "2",
+                      "year": 2023,
+                      "make": "Bugatti",
+                      "model": "Divo",
+                      "type": "Supercar",
+                      "img": "https://hips.hearstapps.com/hmg-prod/images/14bugatti-divo-99leadgallery-1535035005.jpg?crop=0.941xw:0.864xh;0.0423xw,0.136xh&resize=1200:*",
+                      "description": "The Bugatti Divo is a limited-edition hypercar known for its extreme performance and aerodynamic design.",
+                      "fuelConsumption": "6.5",
+                      "engineSize": "8.0L Quad-Turbo W16",
+                      "accessories": [
+                        "Alcantara leather seats",
+                        "Burmester sound system",
+                        "Carbon fiber exterior accents"
+                      ],
+                      "functionalities": [
+                        "All-wheel drive",
+                        "Launch control",
+                        "Advanced aerodynamics",
+                        "Track mode"
+                      ],
+                      "rentalPrice": "$120",
+                      "rentalCompany": "Hypercar Rentals",
+                      "address": "456 Speedy Boulevard, Paris, France",
+                      "rentalConditions": "Minimum age: 35\nValid driver's license\nHigh security deposit required",
+                      "mileage": 500
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/adverts/": {
+      "get": {
+        "tags": ["Adverts"],
+        "summary": "To receive all user adverts in the database",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "example": [
+                    {
+                      "_id": "1",
+                      "year": 2010,
+                      "make": "Mitsubishi",
+                      "model": "Outlander",
+                      "type": "SUV",
+                      "img": "https://media.ed.edmunds-media.com/mitsubishi/outlander-phev/2023/oem/2023_mitsubishi_outlander-phev_4dr-suv_40th-anniversary_fq_oem_1_815.jpg",
+                      "description": "The Mitsubishi Outlander is a practical and fuel-efficient SUV with a stylish design and a range of modern features.",
+                      "fuelConsumption": "7.9",
+                      "engineSize": "2.4L 4-cylinder",
+                      "accessories": [
+                        "Heated front seats",
+                        "Rockford Fosgate premium audio system",
+                        "Power liftgate"
+                      ],
+                      "functionalities": [
+                        "Super All-Wheel Control",
+                        "Multi-View camera system",
+                        "Bluetooth hands-free system"
+                      ],
+                      "rentalPrice": "$30",
+                      "rentalCompany": "City Car Rentals",
+                      "address": "654 Example Avenue, Lviv, Ukraine",
+                      "rentalConditions": "Minimum age: 21\nValid driver's license\nProof of insurance required",
+                      "mileage": 5374
+                    },
+                    {
+                      "_id": "2",
+                      "year": 2023,
+                      "make": "Bugatti",
+                      "model": "Divo",
+                      "type": "Supercar",
+                      "img": "https://hips.hearstapps.com/hmg-prod/images/14bugatti-divo-99leadgallery-1535035005.jpg?crop=0.941xw:0.864xh;0.0423xw,0.136xh&resize=1200:*",
+                      "description": "The Bugatti Divo is a limited-edition hypercar known for its extreme performance and aerodynamic design.",
+                      "fuelConsumption": "6.5",
+                      "engineSize": "8.0L Quad-Turbo W16",
+                      "accessories": [
+                        "Alcantara leather seats",
+                        "Burmester sound system",
+                        "Carbon fiber exterior accents"
+                      ],
+                      "functionalities": [
+                        "All-wheel drive",
+                        "Launch control",
+                        "Advanced aerodynamics",
+                        "Track mode"
+                      ],
+                      "rentalPrice": "$120",
+                      "rentalCompany": "Hypercar Rentals",
+                      "address": "456 Speedy Boulevard, Paris, France",
+                      "rentalConditions": "Minimum age: 35\nValid driver's license\nHigh security deposit required",
+                      "mileage": 500
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Adverts"],
+        "summary": "To add advert",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "properties": {
+                    "year": {
+                      "type": "number",
+                      "description": "Car's manufacturing year",
+                      "required": true
+                    },
+                    "make": {
+                      "type": "string",
+                      "description": "Car's manufacturer",
+                      "required": true
+                    },
+                    "model": {
+                      "type": "string",
+                      "description": "Car's model",
+                      "required": true
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Car's type",
+                      "required": true
+                    },
+                    "img": {
+                      "type": "string",
+                      "description": "URL for car image",
+                      "required": true
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Car's description",
+                      "required": true
+                    },
+                    "fuelConsumption": {
+                      "type": "string",
+                      "description": "Car's fuel consumption",
+                      "required": true
+                    },
+                    "engineSize": {
+                      "type": "string",
+                      "description": "Car's engine size",
+                      "required": true
+                    },
+                    "accessories": {
+                      "type": "array",
+                      "description": "Array of car accessories",
+                      "required": true
+                    },
+                    "functionalities": {
+                      "type": "array",
+                      "description": "Array of car functionalities",
+                      "required": true
+                    },
+                    "rentalPrice": {
+                      "type": "string",
+                      "description": "Car's rental price",
+                      "required": true
+                    },
+                    "rentalCompany": {
+                      "type": "string",
+                      "description": "Rental company for the car",
+                      "required": true
+                    },
+                    "address": {
+                      "type": "string",
+                      "description": "Rental company address",
+                      "required": true,
+                      "format": "address"
+                    },
+                    "rentalConditions": {
+                      "type": "string",
+                      "description": "Rental conditions for the car",
+                      "required": true
+                    },
+                    "mileage": {
+                      "type": "number",
+                      "description": "Car's mileage",
+                      "required": true
+                    }
+                  }
+                },
+                "required": true,
+                "example": {
+                  "year": 2023,
+                  "make": "Bugatti",
+                  "model": "Chiron",
+                  "type": "Supercar",
+                  "img": "https://storage.googleapis.com/pod_public/1300/173320.jpg",
+                  "description": "The Bugatti Chiron is an ultra-high-performance supercar known for its speed and luxury.",
+                  "fuelConsumption": "8.0",
+                  "engineSize": "8.0L Quad-Turbo W16",
+                  "accessories": [
+                    "Leather seats",
+                    "Premium sound system",
+                    "Diamond-cut wheels"
+                  ],
+                  "functionalities": [
+                    "Launch control",
+                    "Advanced aerodynamics",
+                    "Top speed mode"
+                  ],
+                  "rentalPrice": "$100",
+                  "rentalCompany": "Exotic Car Rentals",
+                  "address": "789 Example Boulevard, Monaco, Monaco",
+                  "rentalConditions": "Minimum age: 19\nValid driver's license\nHigh security deposit required\nProof of insurance required",
+                  "mileage": 1000
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "year": 2023,
+                    "make": "Bugatti",
+                    "model": "Chiron",
+                    "type": "Supercar",
+                    "img": "https://storage.googleapis.com/pod_public/1300/173320.jpg",
+                    "description": "The Bugatti Chiron is an ultra-high-performance supercar known for its speed and luxury.",
+                    "fuelConsumption": "8.0",
+                    "engineSize": "8.0L Quad-Turbo W16",
+                    "accessories": [
+                      "Leather seats",
+                      "Premium sound system",
+                      "Diamond-cut wheels"
+                    ],
+                    "functionalities": [
+                      "Launch control",
+                      "Advanced aerodynamics",
+                      "Top speed mode"
+                    ],
+                    "rentalPrice": "$100",
+                    "rentalCompany": "Exotic Car Rentals",
+                    "address": "789 Example Boulevard, Monaco, Monaco",
+                    "rentalConditions": "Minimum age: 19\nValid driver's license\nHigh security deposit required\nProof of insurance required",
+                    "mileage": 1000,
+                    "owner": "ownerID",
+                    "_id": "4",
+                    "createdAt": "2024-01-07T18:34:32.084Z",
+                    "updatedAt": "2024-01-07T18:34:32.084Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/adverts/{advertId}": {
+      "get": {
+        "tags": ["Adverts"],
+        "summary": "To receive user advert by ID in the database",
+        "parameters": [
+          {
+            "name": "advertId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "_id": "1",
+                    "year": 2010,
+                    "make": "Mitsubishi",
+                    "model": "Outlander",
+                    "type": "SUV",
+                    "img": "https://media.ed.edmunds-media.com/mitsubishi/outlander-phev/2023/oem/2023_mitsubishi_outlander-phev_4dr-suv_40th-anniversary_fq_oem_1_815.jpg",
+                    "description": "The Mitsubishi Outlander is a practical and fuel-efficient SUV with a stylish design and a range of modern features.",
+                    "fuelConsumption": "7.9",
+                    "engineSize": "2.4L 4-cylinder",
+                    "accessories": [
+                      "Heated front seats",
+                      "Rockford Fosgate premium audio system",
+                      "Power liftgate"
+                    ],
+                    "functionalities": [
+                      "Super All-Wheel Control",
+                      "Multi-View camera system",
+                      "Bluetooth hands-free system"
+                    ],
+                    "rentalPrice": "$30",
+                    "rentalCompany": "City Car Rentals",
+                    "address": "654 Example Avenue, Lviv, Ukraine",
+                    "rentalConditions": "Minimum age: 21\nValid driver's license\nProof of insurance required",
+                    "mileage": 5374
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Adverts"],
+        "summary": "To delete advert by ID ",
+        "parameters": [
+          {
+            "name": "advertId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Advert deleted"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Adverts"],
+        "summary": "To update advert by ID ",
+        "parameters": [
+          {
+            "name": "advertId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "properties": {
+                    "year": {
+                      "type": "number",
+                      "description": "Car's manufacturing year",
+                      "required": true
+                    },
+                    "make": {
+                      "type": "string",
+                      "description": "Car's manufacturer",
+                      "required": true
+                    },
+                    "model": {
+                      "type": "string",
+                      "description": "Car's model",
+                      "required": true
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Car's type",
+                      "required": true
+                    },
+                    "img": {
+                      "type": "string",
+                      "description": "URL for car image",
+                      "required": true
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Car's description",
+                      "required": true
+                    },
+                    "fuelConsumption": {
+                      "type": "string",
+                      "description": "Car's fuel consumption",
+                      "required": true
+                    },
+                    "engineSize": {
+                      "type": "string",
+                      "description": "Car's engine size",
+                      "required": true
+                    },
+                    "accessories": {
+                      "type": "array",
+                      "description": "Array of car accessories",
+                      "required": true
+                    },
+                    "functionalities": {
+                      "type": "array",
+                      "description": "Array of car functionalities",
+                      "required": true
+                    },
+                    "rentalPrice": {
+                      "type": "string",
+                      "description": "Car's rental price",
+                      "required": true
+                    },
+                    "rentalCompany": {
+                      "type": "string",
+                      "description": "Rental company for the car",
+                      "required": true
+                    },
+                    "address": {
+                      "type": "string",
+                      "description": "Rental company address",
+                      "required": true,
+                      "format": "address"
+                    },
+                    "rentalConditions": {
+                      "type": "string",
+                      "description": "Rental conditions for the car",
+                      "required": true
+                    },
+                    "mileage": {
+                      "type": "number",
+                      "description": "Car's mileage",
+                      "required": true
+                    }
+                  }
+                },
+                "required": true,
+                "example": {
+                  "year": 2023,
+                  "make": "UpdatedMake",
+                  "model": "Chiron",
+                  "type": "Supercar",
+                  "img": "https://storage.googleapis.com/pod_public/1300/173320.jpg",
+                  "description": "The Bugatti Chiron is an ultra-high-performance supercar known for its speed and luxury.",
+                  "fuelConsumption": "8.0",
+                  "engineSize": "8.0L Quad-Turbo W16",
+                  "accessories": [
+                    "Leather seats",
+                    "Premium sound system",
+                    "Diamond-cut wheels"
+                  ],
+                  "functionalities": [
+                    "Launch control",
+                    "Advanced aerodynamics",
+                    "Top speed mode"
+                  ],
+                  "rentalPrice": "$100",
+                  "rentalCompany": "Exotic Car Rentals",
+                  "address": "789 Example Boulevard, Monaco, Monaco",
+                  "rentalConditions": "Minimum age: 19\nValid driver's license\nHigh security deposit required\nProof of insurance required",
+                  "mileage": 1000
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "year": 2023,
+                    "make": "UpdatedMake",
+                    "model": "Chiron",
+                    "type": "Supercar",
+                    "img": "https://storage.googleapis.com/pod_public/1300/173320.jpg",
+                    "description": "The Bugatti Chiron is an ultra-high-performance supercar known for its speed and luxury.",
+                    "fuelConsumption": "8.0",
+                    "engineSize": "8.0L Quad-Turbo W16",
+                    "accessories": [
+                      "Leather seats",
+                      "Premium sound system",
+                      "Diamond-cut wheels"
+                    ],
+                    "functionalities": [
+                      "Launch control",
+                      "Advanced aerodynamics",
+                      "Top speed mode"
+                    ],
+                    "rentalPrice": "$100",
+                    "rentalCompany": "Exotic Car Rentals",
+                    "address": "789 Example Boulevard, Monaco, Monaco",
+                    "rentalConditions": "Minimum age: 19\nValid driver's license\nHigh security deposit required\nProof of insurance required",
+                    "mileage": 1000,
+                    "owner": "ownerID",
+                    "_id": "4",
+                    "createdAt": "2024-01-07T18:34:32.084Z",
+                    "updatedAt": "2024-01-07T18:34:32.084Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
