@@ -54,7 +54,7 @@ You can access the server by opening http://localhost:3000 in your web browser.
 
 ## API Documentation
 
-After creation I will add Swagger.
+For detailed documentation of the API endpoints, request/response formats, and authentication requirements, please refer to the provided [Swagger](https://rent-car-r832.onrender.com/api-docs) specification file.
 
 ## Configuration
 
