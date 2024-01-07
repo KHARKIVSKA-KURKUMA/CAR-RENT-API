@@ -25,7 +25,7 @@ Make sure you have the following installed on your system:
 1. Clone the repository:
 
 ```bash
-   https://github.com/KHARKIVSKA-KURKUMA/CAR-RENT-API.git
+https://github.com/KHARKIVSKA-KURKUMA/CAR-RENT-API.git
 ```
 
 2. Navigate to the project directory:
